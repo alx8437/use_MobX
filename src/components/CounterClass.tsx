@@ -3,21 +3,20 @@ import {observer} from "mobx-react";
 import {action, makeObservable, observable} from "mobx";
 
 
-
-type PropsType = {
+//Counter with mobX ClassComponent
+export type CounterPropsType = {
     count: number
 }
 
-
-//@observer
-export const CounterClass = observer(class extends React.Component<PropsType>{
-    //@observable - раньше, до 6 версии, использовали такой декоратор
+//@observer on change, render component
+export const CounterClass = observer(class extends React.Component<CounterPropsType>{
+    //@observable - наблюдаемые значения и действия, раньше, до 6 версии, использовали такой декоратор
     count = 0
 
-    constructor(props: PropsType) {
+    //now use it
+    constructor(props: CounterPropsType) {
         super(props)
         makeObservable(this, {
-
             count: observable,
             incrementCount: action,
             decrementCount: action.bound,
@@ -49,7 +48,7 @@ export const CounterClass = observer(class extends React.Component<PropsType>{
 
 
 
-//
+//Это просто счетчик с локальным стейтом
 // type PropsType = {
 //     counter: number
 // }
