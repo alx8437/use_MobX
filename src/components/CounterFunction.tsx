@@ -1,9 +1,9 @@
 import {CounterPropsType} from "./CounterClass";
-import React, {useState} from "react";
-import {observer, useLocalObservable, Observer} from "mobx-react";
+import React from "react";
+import {observer, useLocalObservable} from "mobx-react";
 
 
-//use component Observer => Перересовывает выборочно, в отличии от observable, который рендорит весь компонент
+//use component Observer => Перересовывает выборочно, в отличии от observer, который рендорит весь компонент
 // export const CounterFunction: React.FC<CounterPropsType> = ({count}) => {
 //     //observable - наблюдаемые значения и действия
 //     const store = useLocalObservable(() => {
@@ -37,18 +37,21 @@ export const CounterFunction: React.FC<CounterPropsType> = observer(({count}) =>
     const store = useLocalObservable(() => {
         return {
             counter: count,
+            get color() {
+                return this.counter > 0 ? "green" : this.counter < 0 ? "red" : "black"
+            },
             inc() {
-                this.counter++
+                this.counter++;
             },
             dec() {
-                this.counter--
+                this.counter--;
             }
         }
     })
 
     return <div>
         <button onClick={store.inc}>+</button>
-        <span>{store.counter}</span>
+        <span style={{color: store.color}}>{store.counter}</span>
         <button onClick={store.dec}>-</button>
     </div>
 })
